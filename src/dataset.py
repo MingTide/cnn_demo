@@ -21,7 +21,3 @@ def get_dataloader(train=True):
     dataset = InputMethodDataset(config.PROCESSED_DATA_DIR / file_name)
     return DataLoader(dataset, batch_size=config.BATCH_SIZE, shuffle=True)
 
-if __name__ == '__main__':
-    train_dataloader = get_dataloader()
-    test_dataloader = get_dataloader(train=False)
-

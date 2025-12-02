@@ -6,6 +6,7 @@ from torch.utils.tensorboard import SummaryWriter
 from src.dataset import get_dataloader
 from src.model import InputMethodModel
 import config
+from src.tokenizer import JiebaTokenizer
 
 
 def train_one_epoch(model, dataloader, loss_fn, optimizer, device):
@@ -23,11 +24,9 @@ def train_one_epoch(model, dataloader, loss_fn, optimizer, device):
     return avg_loss
 def train():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    dataloader = get_dataloader(False)
-    vocab_size = 0
-    with open( config.MODELS_DIR  / "vocab.txt", "r", encoding="utf-8") as f:
-        vocab_size = [line.strip() for line in f.readlines()]
-    model = InputMethodModel(len(vocab_size)).to(device)
+    dataloader = get_dataloader()
+    jieba_tokenizer = JiebaTokenizer.from_vocab(config.MODELS_DIR / 'vocab.txt')
+    model = InputMethodModel(jieba_tokenizer.vocab_size).to(device)
     loss_fn = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=config.LEARNING_RATE)
     model.to(device)
