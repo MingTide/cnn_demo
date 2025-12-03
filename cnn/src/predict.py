@@ -1,10 +1,8 @@
-import jieba
 import torch
 
-from src import config
-from src.dataset import InputMethodDataset
-from src.model import InputMethodModel
-from src.tokenizer import JiebaTokenizer
+from cnn.src import config
+from cnn.src.model import InputMethodModel
+from cnn.src.tokenizer import JiebaTokenizer
 
 
 def predict_batch(model,inputs):
@@ -25,7 +23,7 @@ def predict(text,model,tokenizer,device):
 
 def run_predict():
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-    tokenizer = JiebaTokenizer.from_vocab( config.MODELS_DIR / 'vocab.txt')
+    tokenizer = JiebaTokenizer.from_vocab(config.MODELS_DIR / 'vocab.txt')
     model = InputMethodModel(vocab_size=tokenizer.vocab_size).to(device)
     model.load_state_dict(torch.load(config.MODELS_DIR / 'model.pt', map_location=device))
     print("请输入（输入q或quit推出）")

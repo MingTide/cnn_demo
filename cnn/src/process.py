@@ -1,13 +1,11 @@
-import jieba
 import pandas as pd
-from pathlib import Path
 
 from sklearn.model_selection import train_test_split
 from tqdm import tqdm
 
 from config import RAW_DATA_DIR
 import  config
-from src.tokenizer import JiebaTokenizer
+from cnn.src.tokenizer import JiebaTokenizer
 
 
 def build_dataset(sentences,jieba_tokenizer):
@@ -33,8 +31,8 @@ def process():
     # 构建训练集
     train_dataset = build_dataset(train_sentences,jieba_tokenizer)
     # 保存训练集
-    pd.DataFrame(train_dataset).to_json(config.PROCESSED_DATA_DIR / 'train.jsonl', orient='records',lines=True)
+    pd.DataFrame(train_dataset).to_json(config.PROCESSED_DATA_DIR / 'train.jsonl', orient='records', lines=True)
     test_dataset = build_dataset(test_sentences,jieba_tokenizer)
-    pd.DataFrame(test_dataset).to_json(config.PROCESSED_DATA_DIR / 'test.jsonl', orient='records',lines=True)
+    pd.DataFrame(test_dataset).to_json(config.PROCESSED_DATA_DIR / 'test.jsonl', orient='records', lines=True)
 if __name__ == '__main__':
     process()

@@ -1,11 +1,11 @@
 import torch
 from tqdm import tqdm
 
-from src import config
-from src.dataset import get_dataloader
-from src.model import InputMethodModel
-from src.predict import predict_batch
-from src.tokenizer import JiebaTokenizer
+from cnn.src import config
+from cnn.src.dataset import get_dataloader
+from cnn.src.model import InputMethodModel
+from cnn.src.predict import predict_batch
+from cnn.src.tokenizer import JiebaTokenizer
 
 
 def evaluate(model, dataloader, device):

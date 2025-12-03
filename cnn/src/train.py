@@ -3,10 +3,10 @@ import time
 import torch
 from tqdm import tqdm
 from torch.utils.tensorboard import SummaryWriter
-from src.dataset import get_dataloader
-from src.model import InputMethodModel
+from cnn.src.dataset import get_dataloader
+from cnn.src.model import InputMethodModel
 import config
-from src.tokenizer import JiebaTokenizer
+from cnn.src.tokenizer import JiebaTokenizer
 
 
 def train_one_epoch(model, dataloader, loss_fn, optimizer, device):
@@ -30,10 +30,10 @@ def train():
     loss_fn = torch.nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=config.LEARNING_RATE)
     model.to(device)
-    writer = SummaryWriter(log_dir=config.LOG_DIR/time.strftime("%Y%m%d-%H%M%S"))
+    writer = SummaryWriter(log_dir=config.LOG_DIR / time.strftime("%Y%m%d-%H%M%S"))
     best_loss = float('inf')
-    for epoch in range(1,1+config.EPOCHS):
-        print("Epoch {}/{}".format(epoch,config.EPOCHS))
+    for epoch in range(1, 1 + config.EPOCHS):
+        print("Epoch {}/{}".format(epoch, config.EPOCHS))
         loss =  train_one_epoch(model,dataloader, loss_fn, optimizer,device)
         print(f"loss: {loss}")
         writer.add_scalar('loss',loss,epoch)
